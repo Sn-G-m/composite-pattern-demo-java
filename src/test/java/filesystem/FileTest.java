@@ -3,7 +3,6 @@ package filesystem;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,31 +16,34 @@ class FileTest {
     @Test
     void testShowDetailsSingle() {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        PrintStream output = System.out;
         System.setOut(new PrintStream(os));
         testSrc.showDetails();
-        String expectation = "File Name: src\nFile Type: folder\nDate of creation: 26 Jul 2025\nNumber of items within(immediately inside): 0\n\n";
+        String expectation = """
+                File Name: src, File Type: folder, Date of creation: 26 Jul 2025
+                0 items found \
+                within src, displaying sub-file details
+                src contents printed successfully...
+                """;
         assertEquals(expectation, os.toString());
     }
 
     @Test
     void testShowDetailsRecursive() {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        PrintStream output = System.out;
         System.setOut(new PrintStream(os));
         testSrc.addFile(testFile);
         testSrc.showDetails();
         String prologue = "New file added to src folder successfully...\n";
-        String srcString = "File Name: src\nFile Type: folder\nDate of creation: 26 Jul 2025\nNumber of items within(immediately inside): 1\n\n";
-        String fileString = "File Name: sample\nFile Type: text\nDate of creation: 25 Jul 2025\n";
-        String expectation = prologue + srcString + fileString;
+        String srcString = "File Name: src, File Type: folder, Date of creation: 26 Jul 2025\n1 items found within src, displaying sub-file details\n";
+        String fileString = "File Name: sample, File Type: text, Date of creation: 25 Jul 2025\n";
+        String epilogue = "src contents printed successfully...\n";
+        String expectation = prologue + srcString + fileString + epilogue;
         assertEquals(expectation, os.toString());
     }
 
     @Test
     void testAddFileToFolder() {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        PrintStream output = System.out;
         System.setOut(new PrintStream(os));
         testSrc.addFile(testFile);
         assertEquals("New file added to src folder successfully...\n", os.toString());
@@ -50,7 +52,6 @@ class FileTest {
     @Test
     void testAddFileToFile() {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        PrintStream output = System.out;
         System.setOut(new PrintStream(os));
         testFile.addFile(testRoot);
         assertEquals("Operation failed with exit code 2, sample is not a directory\n", os.toString());

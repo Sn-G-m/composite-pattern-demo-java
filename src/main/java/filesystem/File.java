@@ -28,20 +28,15 @@ public class File implements IFileSystemComponent {
 
     @Override
     public void showDetails() {
-//        final int lineLen = 50;
-//        System.out.printf("=====Displaying details for %s=====\n", this.fileName);
-        System.out.printf("File Name: %s\n", this.fileName);
-        System.out.printf("File Type: %s\n", this.fileType);
-        System.out.printf("Date of creation: %s\n", this.dateCreated);
+        System.out.printf("File Name: %s, File Type: %s, Date of creation: %s\n", this.fileName, this.fileType, this.dateCreated);
         if ("folder".equals(this.fileType)) {
-            System.out.printf("Number of items within(immediately inside): %s\n\n", this.subFiles.size());
-//            System.out.printf("-----Details for files inside %s-----\n", this.fileName);
+            System.out.printf("%s items found within %s, displaying sub-file details\n", this.subFiles.size(), this.fileName);
             for (IFileSystemComponent subFile : this.subFiles) {
                 subFile.showDetails();
             }
-//            System.out.printf("%s\n", "-".repeat(lineLen));
+            System.out.printf("%s contents printed successfully...\n", this.fileName);
         }
-//        System.out.printf("%s\n", "=".repeat(lineLen));
+
     }
 
     @Override
