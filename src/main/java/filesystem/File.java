@@ -28,27 +28,27 @@ public class File implements IFileSystemComponent {
 
     @Override
     public void showDetails() {
-        final int lineLen = 50;
-        System.out.printf("=====Displaying details for %s=====\n", this.fileName);
+//        final int lineLen = 50;
+//        System.out.printf("=====Displaying details for %s=====\n", this.fileName);
         System.out.printf("File Name: %s\n", this.fileName);
         System.out.printf("File Type: %s\n", this.fileType);
         System.out.printf("Date of creation: %s\n", this.dateCreated);
         if ("folder".equals(this.fileType)) {
             System.out.printf("Number of items within(immediately inside): %s\n\n", this.subFiles.size());
-            System.out.printf("-----Details for files inside %s-----\n", this.fileName);
+//            System.out.printf("-----Details for files inside %s-----\n", this.fileName);
             for (IFileSystemComponent subFile : this.subFiles) {
                 subFile.showDetails();
             }
-            System.out.printf("%s\n", "-".repeat(lineLen));
+//            System.out.printf("%s\n", "-".repeat(lineLen));
         }
-        System.out.printf("%s\n", "=".repeat(lineLen));
+//        System.out.printf("%s\n", "=".repeat(lineLen));
     }
 
     @Override
     public void addFile(final IFileSystemComponent file) {
         if ("folder".equals(this.fileType)) {
             this.subFiles.add(file);
-            System.out.printf("%s added to %s folder successfully...\n", file, this.fileName);
+            System.out.printf("New file added to %s folder successfully...\n", this.fileName);
         } else {
             System.out.printf("Operation failed with exit code 2, %s is not a directory\n", this.fileName);
         }
